@@ -66,10 +66,10 @@ gegl_op_class_init (GeglOpClass *klass)
 
   filter_class->process    = process;
   operation_class->prepare = prepare;
-  
+
   // insert this line below
   operation_class->opencl_support = TRUE;
-  
+
   gegl_operation_class_set_keys (operation_class,
       "name",        "gegl:box-blur",
       "title",       _("Box Blur"),
@@ -92,7 +92,7 @@ if (gegl_operation_use_opencl (operation))
     if (cl_process (operation, input, output, result))
       return TRUE;
 ```
-+ Both kernel and kernel header file (.cl and .cl.h) should be stored in the /opencl/ folder.
++ The kernel source file (.cl) should be stored in the /opencl/ folder (header files .cl.h should be avoided).
 + Include both files, and any other necessary gegl-cl header in the operation's source code (eg. box-blur.c)
 ```c
 #include "opencl/gegl-cl.h"
@@ -149,6 +149,6 @@ $ cd tests/opencl
 $ perl benchmark.pl box-blur.xml no 1
 $ perl benchmark.pl box-blur.xml gpu 1
 $ perl benchmark.pl box-blur.xml cpu 1
-``` 
+```
 + note that 'gpu'/'cpu' denotes that OpenCL is enabled, while 'no' denotes that OpenCL is disabled
 + the number at the end denotes the number of iterations to run, after which the average time for the operation is returned

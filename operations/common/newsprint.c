@@ -471,7 +471,6 @@ process (GeglOperation       *operation,
 
 #if 0
 #include "opencl/gegl-cl.h"
-#include "opencl/spachrotyze.cl.h"
 
 static GeglClRunData *cl_data = NULL;
 
@@ -492,6 +491,7 @@ cl_process (GeglOperation       *op,
 
   if (!cl_data)
     {
+      char * spachrotyzer_cl_source = gegl_cl_get_kernel_source("opencl/spachrotyze.cl");
       const char *kernel_name[] = {"gegl_spachrotyzer", NULL};
       cl_data = gegl_cl_compile_and_build (spachrotyzer_cl_source, kernel_name);
     }

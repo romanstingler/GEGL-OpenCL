@@ -163,7 +163,6 @@ process (GeglOperation       *operation,
 }
 
 #include "opencl/gegl-cl.h"
-#include "opencl/color-exchange.cl.h"
 
 static GeglClRunData *cl_data = NULL;
 
@@ -185,6 +184,7 @@ cl_process (GeglOperation       *operation,
 
   if (!cl_data)
     {
+      char * color_exchange_cl_source = gegl_cl_get_kernel_source("opencl/color-exchange.cl");
       const char *kernel_name[] = {"cl_color_exchange",
                                    NULL};
       cl_data = gegl_cl_compile_and_build (color_exchange_cl_source, kernel_name);

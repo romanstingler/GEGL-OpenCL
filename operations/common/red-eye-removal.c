@@ -103,7 +103,6 @@ process (GeglOperation       *operation,
 }
 
 #include "opencl/gegl-cl.h"
-#include "opencl/red-eye-removal.cl.h"
 
 static GeglClRunData *cl_data = NULL;
 
@@ -121,6 +120,7 @@ cl_process (GeglOperation       *operation,
 
   if (!cl_data)
     {
+      char * red_eye_removal_cl_source = gegl_cl_get_kernel_source("opencl/red-eye-removal.cl");
       const char *kernel_name[] = {"cl_red_eye_removal", NULL};
       cl_data = gegl_cl_compile_and_build(red_eye_removal_cl_source, kernel_name);
     }

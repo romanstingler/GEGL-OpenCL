@@ -93,8 +93,6 @@ get_bounding_box (GeglOperation *operation)
       (coordinate) / (stride):\
       ((((coordinate) + 1) /(stride)) - 1))
 
-
-#include "opencl/checkerboard.cl.h"
 static GeglClRunData *cl_data = NULL;
 
 static gboolean
@@ -114,6 +112,7 @@ checkerboard_cl_process (GeglOperation       *operation,
 
   if (!cl_data)
   {
+    char * checkerboard_cl_source = gegl_cl_get_kernel_source("opencl/checkerboard.cl");
     const char *kernel_name[] = {"kernel_checkerboard", NULL};
     cl_data = gegl_cl_compile_and_build (checkerboard_cl_source, kernel_name);
 

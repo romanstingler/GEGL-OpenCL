@@ -180,7 +180,6 @@ process (GeglOperation       *op,
 }
 
 #include "opencl/gegl-cl.h"
-#include "opencl/alien-map.cl.h"
 
 static GeglClRunData *cl_data = NULL;
 
@@ -200,8 +199,8 @@ cl_process (GeglOperation       *operation,
 
   if (!cl_data)
     {
-      const char *kernel_name[] = {"cl_alien_map",
-                                   NULL};
+      char * alien_map_cl_source = gegl_cl_get_kernel_source("opencl/alien-map.cl");
+      const char *kernel_name[] = {"cl_alien_map", NULL};
       cl_data = gegl_cl_compile_and_build (alien_map_cl_source, kernel_name);
     }
 

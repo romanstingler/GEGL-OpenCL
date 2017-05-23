@@ -34,7 +34,7 @@ property_double (pct_random, _("Randomization (%)"), 50.0)
 property_int   (repeat, _("Repeat"), 1)
    value_range (1, 100)
 
-property_seed (seed, _("Random seed"), rand) 
+property_seed (seed, _("Random seed"), rand)
 
 #else
 
@@ -107,7 +107,6 @@ process (GeglOperation       *operation,
 }
 
 #include "opencl/gegl-cl.h"
-#include "opencl/noise-hurl.cl.h"
 
 static GeglClRunData *cl_data = NULL;
 
@@ -138,6 +137,7 @@ cl_process (GeglOperation       *operation,
 
   if (!cl_data)
   {
+    char * noise_hurl_cl_source = gegl_cl_get_kernel_source("opencl/noise-hurl.cl");
     const char *kernel_name[] ={"cl_noise_hurl", NULL};
     cl_data = gegl_cl_compile_and_build(noise_hurl_cl_source, kernel_name);
   }

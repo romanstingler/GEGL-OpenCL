@@ -154,8 +154,6 @@ compute_phi (gdouble xr,
 #include "opencl/gegl-cl.h"
 #include "gegl-buffer-cl-iterator.h"
 
-#include "opencl/motion-blur-circular.cl.h"
-
 static GeglClRunData *cl_data = NULL;
 
 static gboolean
@@ -174,6 +172,7 @@ cl_motion_blur_circular (cl_mem               in,
 
   if (!cl_data)
     {
+      char * motion_blur_circular_cl_source = gegl_cl_get_kernel_source("opencl/motion-blur-circular.cl");
       const char *kernel_name[] = { "cl_motion_blur_circular", NULL };
       cl_data = gegl_cl_compile_and_build (motion_blur_circular_cl_source,
                                            kernel_name);

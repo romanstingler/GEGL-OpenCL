@@ -131,7 +131,6 @@ color_to_alpha (const gfloat *color,
 }
 
 #include "opencl/gegl-cl.h"
-#include "opencl/color-to-alpha.cl.h"
 
 static GeglClRunData * cl_data = NULL;
 
@@ -149,6 +148,7 @@ cl_process (GeglOperation       *operation,
 
   if (!cl_data)
     {
+      char * color_to_alpha_cl_source = gegl_cl_get_kernel_source("opencl/color-to-alpha.cl");
       const char *kernel_name[] = {"cl_color_to_alpha",NULL};
       cl_data = gegl_cl_compile_and_build (color_to_alpha_cl_source, kernel_name);
     }

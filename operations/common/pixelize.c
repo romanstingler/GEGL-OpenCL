@@ -388,8 +388,6 @@ pixelize (gfloat              *input,
 #include "opencl/gegl-cl.h"
 #include "gegl-buffer-cl-iterator.h"
 
-#include "opencl/pixelize.cl.h"
-
 static GeglClRunData *cl_data = NULL;
 
 static gboolean
@@ -423,6 +421,7 @@ cl_pixelize (cl_mem               in_tex,
 
   if (!cl_data)
   {
+    char * pixelize_cl_source = gegl_cl_get_kernel_source("opencl/pixelize.cl");
     const char *kernel_name[] = {"calc_block_color", "kernel_pixelize", NULL};
     cl_data = gegl_cl_compile_and_build (pixelize_cl_source, kernel_name);
   }

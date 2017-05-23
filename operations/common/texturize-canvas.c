@@ -4189,7 +4189,6 @@ prepare (GeglOperation *operation)
 }
 
 #include "opencl/gegl-cl.h"
-#include "opencl/texturize-canvas.cl.h"
 
 static GeglClRunData *cl_data = NULL;
 
@@ -4236,6 +4235,7 @@ cl_process(GeglOperation *op,
 
    if(!cl_data)
    {
+     char * texturize_canvas_cl_source = gegl_cl_get_kernel_source("opencl/texturize-canvas.cl");
       const char *kernel_name[] = {"cl_texturize_canvas", NULL};
       cl_data = gegl_cl_compile_and_build(texturize_canvas_cl_source, kernel_name);
    }
@@ -4387,4 +4387,3 @@ gegl_op_class_init (GeglOpClass *klass)
 }
 
 #endif
-

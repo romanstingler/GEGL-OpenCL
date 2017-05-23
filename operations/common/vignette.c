@@ -124,8 +124,6 @@ scale_to_aspect (float scale)
 
 #include "opencl/gegl-cl.h"
 
-#include "opencl/vignette.cl.h"
-
 static GeglClRunData * cl_data = NULL;
 
 static gboolean
@@ -179,6 +177,7 @@ cl_process (GeglOperation       *operation,
 
   if (!cl_data)
     {
+      char * vignette_cl_source = gegl_cl_get_kernel_source("opencl/vignette.cl");
       const char *kernel_name[] = {"vignette_cl",NULL};
       cl_data = gegl_cl_compile_and_build (vignette_cl_source, kernel_name);
     }

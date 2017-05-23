@@ -65,8 +65,6 @@ static void prepare (GeglOperation *operation)
 #include "opencl/gegl-cl.h"
 #include "gegl-buffer-cl-iterator.h"
 
-#include "opencl/bilateral-filter.cl.h"
-
 static GeglClRunData *cl_data = NULL;
 
 static gboolean
@@ -82,6 +80,7 @@ cl_bilateral_filter (cl_mem                in_tex,
 
   if (!cl_data)
     {
+      char * bilateral_filter_cl_source = gegl_cl_get_kernel_source("opencl/bilateral-filter.cl");
       const char *kernel_name[] = {"bilateral_filter", NULL};
       cl_data = gegl_cl_compile_and_build (bilateral_filter_cl_source, kernel_name);
     }

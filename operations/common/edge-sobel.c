@@ -81,8 +81,6 @@ static void prepare (GeglOperation *operation)
 #include "opencl/gegl-cl.h"
 #include "gegl-buffer-cl-iterator.h"
 
-#include "opencl/edge-sobel.cl.h"
-
 static GeglClRunData *cl_data = NULL;
 
 static gboolean
@@ -104,6 +102,7 @@ cl_edge_sobel (cl_mem              in_tex,
 
   if (!cl_data)
     {
+      char * edge_sobel_cl_source = gegl_cl_get_kernel_source("opencl/edge-sobel.cl");
       const char *kernel_name[] = {"kernel_edgesobel", NULL};
       cl_data = gegl_cl_compile_and_build (edge_sobel_cl_source, kernel_name);
     }

@@ -57,6 +57,8 @@ void              gegl_cl_set_default_device_type (cl_device_type default_device
 
 gboolean          gegl_cl_has_extension (const char *extension_name);
 
+const char *      gegl_cl_get_kernel_source(const char *filename);
+
 typedef struct
 {
   cl_program  program;

@@ -156,8 +156,6 @@ static void prepare (GeglOperation *operation)
 #include "opencl/gegl-cl.h"
 #include "gegl-buffer-cl-iterator.h"
 
-#include "opencl/noise-reduction.cl.h"
-
 static GeglClRunData *cl_data = NULL;
 
 static gboolean
@@ -182,6 +180,7 @@ cl_noise_reduction (cl_mem                in_tex,
 
   if (!cl_data)
     {
+      char * noise_reduction_cl_source = gegl_cl_get_kernel_source("opencl/noise-reduction.cl");
       const char *kernel_name[] ={"noise_reduction_cl","transfer", NULL};
       cl_data = gegl_cl_compile_and_build(noise_reduction_cl_source, kernel_name);
     }

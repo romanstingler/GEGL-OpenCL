@@ -122,7 +122,6 @@ get_cached_region (GeglOperation       *operation,
 
 #include "opencl/gegl-cl.h"
 #include "gegl-buffer-cl-iterator.h"
-#include "opencl/stretch-contrast.cl.h"
 
 static GeglClRunData *cl_data = NULL;
 
@@ -131,6 +130,7 @@ cl_build_kernels (void)
 {
   if (!cl_data)
     {
+      char * stretch_contrast_cl_source = gegl_cl_get_kernel_source("opencl/stretch-contrast.cl");
       const char *kernel_name[] = {"two_stages_local_min_max_reduce",
                                    "global_min_max_reduce",
                                    "cl_stretch_contrast",

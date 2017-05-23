@@ -183,7 +183,6 @@ static void prepare (GeglOperation *operation)
 #include "opencl/gegl-cl.h"
 #include "gegl-buffer-cl-iterator.h"
 
-#include "opencl/box-blur.cl.h"
 static GeglClRunData *cl_data = NULL;
 static gboolean
 cl_box_blur (cl_mem                in_tex,
@@ -199,6 +198,7 @@ cl_box_blur (cl_mem                in_tex,
   size_t step_size ;
   if (!cl_data)
     {
+      char * box_blur_cl_source = gegl_cl_get_kernel_source("opencl/box-blur.cl");
       const char *kernel_name[] = { "kernel_blur_hor", "kernel_blur_ver","kernel_box_blur_fast", NULL};
       cl_data = gegl_cl_compile_and_build (box_blur_cl_source, kernel_name);
     }

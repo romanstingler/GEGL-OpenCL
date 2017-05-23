@@ -48,8 +48,6 @@ static void prepare (GeglOperation *operation)
 #include "opencl/gegl-cl.h"
 #include "gegl/gegl-debug.h"
 
-#include "opencl/contrast-curve.cl.h"
-
 /* TODO : Replace gegl_curve_calc_values and gegl_curve_calc_value in cl_process
           with something more suitable for the cl version*/
 
@@ -85,6 +83,7 @@ cl_process (GeglOperation       *self,
 
   if (!cl_data)
     {
+      char * contrast_curve_cl_source = gegl_cl_get_kernel_source("opencl/contrast-curve.cl");
       const char *kernel_name[] = {"cl_contrast_curve",NULL};
       cl_data = gegl_cl_compile_and_build (contrast_curve_cl_source,
                                            kernel_name);

@@ -386,8 +386,6 @@ fir_ver_blur (GeglBuffer          *src,
 #include "opencl/gegl-cl.h"
 #include "gegl-buffer-cl-iterator.h"
 
-#include "opencl/gblur-1d.cl.h"
-
 static GeglClRunData *cl_data = NULL;
 
 
@@ -405,6 +403,7 @@ cl_gaussian_blur (cl_mem                 in_tex,
 
   if (!cl_data)
     {
+      char * gblur_1d_cl_source = gegl_cl_get_kernel_source("opencl/gblur_1d.cl");
       const char *kernel_name[] = {"fir_ver_blur", "fir_hor_blur", NULL};
       cl_data = gegl_cl_compile_and_build (gblur_1d_cl_source, kernel_name);
     }

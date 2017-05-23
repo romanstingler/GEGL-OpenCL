@@ -206,8 +206,6 @@ process (GeglOperation       *op,
 
 #include "opencl/gegl-cl.h"
 
-#include "opencl/opacity.cl.h"
-
 static GeglClRunData *cl_data = NULL;
 
 static gboolean
@@ -225,6 +223,7 @@ cl_process (GeglOperation       *op,
 
   if (!cl_data)
     {
+      char * opacity_cl_source = gegl_cl_get_kernel_source("opencl/opacity.cl");
       const char *kernel_name[] = {"gegl_opacity_RaGaBaA_float", "gegl_opacity_RGBA_float", NULL};
       cl_data = gegl_cl_compile_and_build (opacity_cl_source, kernel_name);
     }

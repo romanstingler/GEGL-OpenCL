@@ -66,8 +66,6 @@ property_seed    (seed, _("Random seed"), rand)
 #include <gegl-debug.h>
 #include <math.h>
 
-#include "opencl/noise-cell.cl.h"
-
 /* Random feature counts following the Poisson distribution with
    lambda equal to 7. */
 
@@ -275,6 +273,7 @@ cl_process (GeglOperation       *operation,
 
   if (!cl_data)
   {
+    char * noise_cell_cl_source = gegl_cl_get_kernel_source("opencl/noise-cell.cl");
     const char *kernel_name[] = {"kernel_noise", NULL};
     cl_data = gegl_cl_compile_and_build (noise_cell_cl_source, kernel_name);
 
@@ -336,7 +335,7 @@ c_process (GeglOperation       *operation,
   context.rank = o->rank;
   context.shape = o->shape;
   context.palettize = o->palettize;
-    
+
   while (n_pixels --)
   {
     gint    i;

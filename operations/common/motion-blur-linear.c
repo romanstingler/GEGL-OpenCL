@@ -70,8 +70,6 @@ prepare (GeglOperation *operation)
 #include "opencl/gegl-cl.h"
 #include "gegl-buffer-cl-iterator.h"
 
-#include "opencl/motion-blur-linear.cl.h"
-
 static GeglClRunData *cl_data = NULL;
 
 static gboolean
@@ -89,6 +87,7 @@ cl_motion_blur_linear (cl_mem                in_tex,
 
   if (!cl_data)
     {
+      char * motion_blur_linear_cl_source = gegl_cl_get_kernel_source("opencl/motion-blur-linear.cl");
       const char *kernel_name[] = {"motion_blur_linear", NULL};
       cl_data = gegl_cl_compile_and_build (motion_blur_linear_cl_source, kernel_name);
     }

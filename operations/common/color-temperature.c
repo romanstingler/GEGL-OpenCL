@@ -182,7 +182,6 @@ process (GeglOperation       *op,
 }
 
 #include "opencl/gegl-cl.h"
-#include "opencl/color-temperature.cl.h"
 
 static GeglClRunData *cl_data = NULL;
 
@@ -211,6 +210,7 @@ cl_process (GeglOperation       *op,
 
   if (!cl_data)
     {
+      char * color_temperature_cl_source = gegl_cl_get_kernel_source("opencl/color-temperature.cl");
       const char *kernel_name[] = {"gegl_color_temperature", NULL};
       cl_data = gegl_cl_compile_and_build (color_temperature_cl_source, kernel_name);
     }

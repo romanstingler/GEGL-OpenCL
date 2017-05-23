@@ -221,8 +221,6 @@ gblur_selective (GeglBuffer          *input,
 #include "opencl/gegl-cl.h"
 #include "gegl-buffer-cl-iterator.h"
 
-#include "opencl/gaussian-blur-selective.cl.h"
-
 static GeglClRunData *cl_data = NULL;
 
 static gboolean
@@ -239,6 +237,7 @@ cl_gblur_selective (cl_mem                in,
 
   if (!cl_data)
     {
+      char * gaussian_blur_selective_cl_source = gegl_cl_get_kernel_source("opencl/gaussian-blur-selective.cl");
       const char *kernel_name[] = { "cl_gblur_selective", NULL };
       cl_data = gegl_cl_compile_and_build (gaussian_blur_selective_cl_source,
                                            kernel_name);

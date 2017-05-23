@@ -101,8 +101,6 @@ property_int    (height, _("Height"), 200)
 #include <gegl-buffer-cl-iterator.h>
 #include <gegl-debug.h>
 
-#include "opencl/diffraction-patterns.cl.h"
-
 static GeglClRunData *cl_data = NULL;
 
 #define ITERATIONS      100
@@ -221,6 +219,7 @@ cl_process (GeglOperation       *operation,
 
   if (!cl_data)
     {
+      char * diffraction_patterns_cl_source = gegl_cl_get_kernel_source("opencl/diffraction-patterns.cl");
       const char *kernel_name[] = { "cl_diffraction_patterns", NULL };
       cl_data = gegl_cl_compile_and_build (diffraction_patterns_cl_source,
                                            kernel_name);

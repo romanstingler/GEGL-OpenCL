@@ -145,7 +145,7 @@ snn_mean (GeglBuffer          *src,
   src_buf = g_new0 (gfloat, src_rect->width * src_rect->height * 4);
   dst_buf = g_new0 (gfloat, dst_rect->width * dst_rect->height * 4);
 
-  gegl_buffer_get (src, src_rect, 1.0/(1<<level), babl_format ("RGBA float"), src_buf, 
+  gegl_buffer_get (src, src_rect, 1.0/(1<<level), babl_format ("RGBA float"), src_buf,
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
   offset = 0;
@@ -235,8 +235,6 @@ snn_mean (GeglBuffer          *src,
 #include "opencl/gegl-cl.h"
 #include "gegl-buffer-cl-iterator.h"
 
-#include "opencl/snn-mean.cl.h"
-
 static GeglClRunData *cl_data = NULL;
 
 static gboolean
@@ -252,6 +250,7 @@ cl_snn_mean (cl_mem                in_tex,
 
   if (!cl_data)
     {
+      char * snn_mean_cl_source = gegl_cl_get_kernel_source("opencl/snn-mean.cl");
       const char *kernel_name[] = {"snn_mean", NULL};
       cl_data = gegl_cl_compile_and_build (snn_mean_cl_source, kernel_name);
     }

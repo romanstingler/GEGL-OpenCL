@@ -40,7 +40,6 @@ static void prepare (GeglOperation *operation)
 }
 
 #include "opencl/gegl-cl.h"
-#include "opencl/weighted-blend.cl.h"
 
 static GeglClRunData *cl_data = NULL;
 
@@ -57,6 +56,7 @@ cl_process (GeglOperation       *self,
 
   if (!cl_data)
     {
+      char * weighted_blend_cl_source = gegl_cl_get_kernel_source("opencl/weighted-blend.cl");
       const char *kernel_name[] = {"cl_copy_weigthed_blend",
                                    "cl_weighted_blend",
                                    NULL};

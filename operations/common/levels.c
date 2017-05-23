@@ -99,8 +99,6 @@ process (GeglOperation       *op,
 
 #include "opencl/gegl-cl.h"
 
-#include "opencl/levels.cl.h"
-
 static GeglClRunData *cl_data = NULL;
 
 /* OpenCL processing function */
@@ -138,6 +136,7 @@ cl_process (GeglOperation       *op,
 
   if (!cl_data)
     {
+      char * levels_cl_source = gegl_cl_get_kernel_source("opencl/levels.cl");
       const char *kernel_name[] = {"kernel_levels", NULL};
       cl_data = gegl_cl_compile_and_build (levels_cl_source, kernel_name);
     }

@@ -66,7 +66,6 @@ static gboolean process (GeglOperation       *operation,
 }
 
 #include "opencl/gegl-cl.h"
-#include "opencl/posterize.cl.h"
 
 static GeglClRunData *cl_data = NULL;
 
@@ -83,6 +82,7 @@ cl_process (GeglOperation       *operation,
 
   if (!cl_data)
     {
+      char * posterize_cl_source = gegl_cl_get_kernel_source("opencl/posterize.cl");
       const char *kernel_name[] = {"cl_posterize",
                                    NULL};
       cl_data = gegl_cl_compile_and_build (posterize_cl_source, kernel_name);
